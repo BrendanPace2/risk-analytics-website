@@ -1,5 +1,5 @@
 # Federal funding impact on the state of Utah
-Developed by the USU risk analytics team
+Developed by the USU computational finance team
 
 
 <!--# Example of Importing the Design System in to a Vite-React Project

@@ -15,3 +15,31 @@
   --accent-color-dark: #745a1e;
   --accent-color-light: #fff9ec;
 }
+
+
+/*anything below here figure out how to sort into different files*/
+
+.home-banner {
+  width: 100%;
+  background: url('./images/ut-landscape.jpg') no-repeat 100% center;
+  background-size: cover;
+  display: flex;
+  justify-content: flex-end;
+  /*min-height: 400px*/
+}
+
+.home-banner-title {
+    color: white;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(30px) brightness(1);
+    -webkit-backdrop-filter: blur(16px) brightness(1.5);
+    font-family: var(--ut-industry-font-family);
+    font-size: var(--font-size-6xl);
+    font-weight: bold;
+    width: 300px;
+    border-radius: var(--radius-large);
+    margin: var(--spacing-3xl);
+    padding: var(--spacing-l);
+    line-height: 1.2;
+    text-align: left;
+}

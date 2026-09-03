@@ -18,10 +18,14 @@ import { Accordion, ExternalLink } from '@utahdts/utah-design-system';
 export function HomeLanding() {
   return (
     <section className="landing-page-template">
+      <div className="home-banner">
+        <div className="home-banner-title">USU<br />Analytics<br />Team</div>
+      </div>
 
-      <h1>Welcome</h1>
-      <p>Nice to meet you</p>
-      <div className="home-banner"></div>
+      <main id="main-content" className="px-spacing" style={{ minHeight: '80vh' }}>
+        <h1 className="text-center my-spacing">Welcome</h1>
+        <p>What should this page look like?</p>
+      </main>
     </section>
   );
 }

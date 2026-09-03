@@ -79,14 +79,15 @@ export function App() {
     <>
       <div id="utah-header-target" />
 
-      <main id="main-content" className="px-spacing" style={{ minHeight: '80vh' }}>
-        <Routes>
-          <Route path="/" element={<HomeLanding />} />
-          <Route path="/healthcare" element={<Healthcare />} />
-          <Route path="/education" element={<Education />} />
-          <Route path="/example" element={<Example />} />
-        </Routes>
-      </main>
+      {/* <main id="main-content" className="px-spacing" style={{ minHeight: '80vh' }}>
+      </main>*/}
+
+      <Routes>
+        <Route path="/" element={<HomeLanding />} />
+        <Route path="/healthcare" element={<Healthcare />} />
+        <Route path="/education" element={<Education />} />
+        <Route path="/example" element={<Example />} />
+      </Routes>
 
       {/* <footer id="footer-target" aria-label="page" className="mt-spacing-xl" />*/}
 

@@ -2,7 +2,7 @@ import { Accordion } from '@utahdts/utah-design-system';
 
 export function Example() {
   return (
-    <>
+    <main id="main-content" className="px-spacing" style={{ minHeight: '80vh' }}>
       <h1 className="text-center my-spacing-l">React + Vite</h1>
       <p className="text-center">
         The header and footer are configured immediately after the initial render.<br />
@@ -92,6 +92,6 @@ export function Example() {
           </span>
         </Accordion>
       </div>
-    </>
+    </main>
   );
 }

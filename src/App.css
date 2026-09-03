@@ -1,7 +1,11 @@
 .utah-design-system {
-  --primary-color: #056977;
+  /*--primary-color: #056977;
   --primary-color-dark: #044b55;
-  --primary-color-light: #0CA4A5;
+  --primary-color-light: #0CA4A5;*/
+
+  --primary-color: #0258BB;
+  --primary-color-dark: #0E1C3B;
+  --primary-color-light: #C1CFE7;
 
   --secondary-color: #774f3a;
   --secondary-color-dark: #4c3326;

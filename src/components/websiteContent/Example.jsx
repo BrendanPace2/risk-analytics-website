@@ -1,6 +1,6 @@
 import { Accordion } from '@utahdts/utah-design-system';
 
-export function Home() {
+export function Example() {
   return (
     <>
       <h1 className="text-center my-spacing-l">React + Vite</h1>

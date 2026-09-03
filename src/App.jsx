@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { setUtahHeaderSettings } from '@utahdts/utah-design-system-header';
-// import { Accordion } from '@utahdts/utah-design-system';
 import '@utahdts/utah-design-system/css/index.scss';
 import './App.css'
 
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { Healthcare } from './pages/Healthcare';
-import { Education } from './pages/Education';
-import { Home } from './pages/Home';
+import { HomeLanding } from './components/websiteContent/HomeLanding';
+import { Healthcare } from './components/websiteContent/Healthcare';
+import { Example } from './components/websiteContent/Example';
+import { Education } from './components/websiteContent/Education';
+import { FooterSocialMedia } from './components/FooterSocialMedia';
 
 export function App() {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ export function App() {
           buildMenuItem('Healthcare', '/healthcare'),
           buildMenuItem('Education', '/education'),
           buildMenuItem('Transportation', '/transportation'),
+          buildMenuItem('Example', '/example'),
           {
             actionUrl: {
               url: 'https://github.com/Josh-Liddell/risk-analysis-website',
@@ -77,15 +79,21 @@ export function App() {
     <>
       <div id="utah-header-target" />
 
-      <main id="main-content" className="px-spacing">
+      <main id="main-content" className="px-spacing" style={{ minHeight: '80vh' }}>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomeLanding />} />
           <Route path="/healthcare" element={<Healthcare />} />
           <Route path="/education" element={<Education />} />
+          <Route path="/example" element={<Example />} />
         </Routes>
       </main>
 
-      <footer id="footer-target" aria-label="page" className="mt-spacing-xl" />
+      {/* <footer id="footer-target" aria-label="page" className="mt-spacing-xl" />*/}
+
+      <footer aria-label="page" className="mt-spacing-xl">
+        <FooterSocialMedia />
+        <div id="footer-target" />
+      </footer>
     </>
   )
 }

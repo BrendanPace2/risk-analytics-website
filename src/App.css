@@ -21,14 +21,48 @@
 
 .home-banner {
   width: 100%;
-  background: url('./images/ut-landscape.jpg') no-repeat 100% center;
+  background: url('./assets/delicate-arch-tom-gainor-unsplash.webp') no-repeat 100% center;
   background-size: cover;
   display: flex;
   justify-content: flex-end;
-  /*min-height: 400px*/
+  min-height: 300px
 }
 
-.home-banner-title {
+.home-banner-sidebar {
+  /*background-color: #1A1A1A;*/
+  /*background-color: #292C33;*/
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(30px) brightness(1);
+  -webkit-backdrop-filter: blur(16px) brightness(1.5);
+
+  width: 35%;
+
+  /*clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%);*/
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 23% 100%);
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  /* Keeps text away from the diagonal edge */
+  padding: var(--spacing-3xl) var(--spacing-3xl) var(--spacing-3xl) 15%;
+
+  font-size: var(--font-size-2xl);
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+
+}
+
+.banner-buttons {
+  display: flex;
+  gap: 2rem;
+}
+
+/*.home-banner-title {
     color: white;
     background: rgba(0,0,0,0.7);
     backdrop-filter: blur(30px) brightness(1);
@@ -42,4 +76,21 @@
     padding: var(--spacing-l);
     line-height: 1.2;
     text-align: left;
+}*/
+
+.section2 {
+  background-color: #1A1A1A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 50vh;
+}
+
+.section3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  min-height: 50vh;
 }

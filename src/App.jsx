@@ -44,6 +44,7 @@ export function App() {
           buildMenuItem('Education', '/education'),
           buildMenuItem('Transportation', '/transportation'),
           buildMenuItem('Example', '/example'),
+          buildMenuItem('Simulate', '/simulate'),
           {
             actionUrl: {
               url: 'https://github.com/Josh-Liddell/risk-analysis-website',

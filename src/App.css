@@ -32,8 +32,8 @@
   /*background-color: #1A1A1A;*/
   /*background-color: #292C33;*/
   background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(30px) brightness(1);
-  -webkit-backdrop-filter: blur(16px) brightness(1.5);
+  /*backdrop-filter: blur(30px) brightness(1);*/
+  /*-webkit-backdrop-filter: blur(16px) brightness(1.5);*/
 
   width: 35%;
 
@@ -82,9 +82,9 @@
   background-color: #1A1A1A;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 100%;
-  min-height: 50vh;
+  min-height: 40vh;
 }
 
 .section3 {
@@ -93,4 +93,17 @@
   justify-content: space-evenly;
   width: 100%;
   min-height: 50vh;
+}
+
+.contact {
+    background: var(--gray-light-color);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: var(--spacing-5xl) 0;
+    text-align: center;
+    .icon-chat-bubbles {
+        fill: var(--primary-color);
+        width: 80px;
+    }
 }

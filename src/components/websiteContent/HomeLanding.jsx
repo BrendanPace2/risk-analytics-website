@@ -2,6 +2,8 @@ import { Accordion, ExternalLink } from '@utahdts/utah-design-system';
 import { Button, Tooltip } from '@utahdts/utah-design-system';
 // import { Link } from 'react-router-dom';
 import { useRef } from 'react';
+import { CardLink } from '../CardLink';
+import { IconsWebsite } from '../IconsWebsite';
 
 export function HomeLanding() {
   const referenceElement = useRef();
@@ -50,30 +52,48 @@ export function HomeLanding() {
           <span className="visually-hidden">Gear Icon</span>
         </Button>*/}
 
-
-
-
       </main>
 
 
       <div className="section2">
-        more things!!!!!!!
+        <CardLink />
+        <CardLink />
+        <CardLink />
       </div>
 
       <div className="section3">
-        <div class="card p-spacing-xl">
-          <div class="card__title">Title</div>
+        <div className="card p-spacing-xl">
+          <div className="card__title">Title</div>
           <p>Sed ut perspiciatis unde omnis iste natus error.</p>
-          <div class="flex justify-end">
-            <button type="button" class="button">Contact Us</button>
+          <div className="flex justify-end">
+            <button type="button" className="button">Contact Us</button>
             <button
               type="button"
-              class="button button--solid ml-spacing"
+              className="button button--solid ml-spacing"
             >
               <span>See More</span>
-              <span class="button--icon button--icon-right">
+              <span className="button--icon button--icon-right">
                 <span
-                  class="utds-icon-before-arrow-right"
+                  className="utds-icon-before-arrow-right"
+                  aria-hidden="true"
+                ></span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div className="card p-spacing-xl">
+          <div className="card__title">Title</div>
+          <p>Sed ut perspiciatis unde omnis iste natus error.</p>
+          <div className="flex justify-end">
+            <button type="button" className="button">Contact Us</button>
+            <button
+              type="button"
+              className="button button--solid ml-spacing"
+            >
+              <span>See More</span>
+              <span className="button--icon button--icon-right">
+                <span
+                  className="utds-icon-before-arrow-right"
                   aria-hidden="true"
                 ></span>
               </span>
@@ -81,26 +101,18 @@ export function HomeLanding() {
           </div>
         </div>
 
-        <a
-          class="action-card action-card--primary-color action-card--solid"
-          href="/gettingStarted"
-        >
-          <div class="action-card__title">
-              <h3>Getting Started</h3>
-              <span class="button--icon button--icon-right">
-                <span
-                  class="utds-icon-before-arrow-right"
-                  aria-hidden="true">
-                </span>
-              </span>
-          </div>
-          <div class="action-card__body">
-              Learn how to implement the Design System.
-          </div>
-        </a>
+      </div>
 
-
-
+      {/* contact section */}
+      <div className="contact mt-spacing-xl">
+        <div className="content-width">
+          <IconsWebsite.IconChatBubbles isHidden />
+          <h2 className="text-center mt-spacing-l">Reach out!</h2>
+          <p>
+            Have a question? Got a suggestion? <a href="mailto:caleb.dissel@gmail.com">Contact us</a>.<br />
+            Your feedback will help us make our software better!
+          </p>
+        </div>
       </div>
 
 

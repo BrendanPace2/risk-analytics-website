@@ -9,6 +9,7 @@ import { Healthcare } from './components/websiteContent/Healthcare';
 import { Example } from './components/websiteContent/Example';
 import { Education } from './components/websiteContent/Education';
 import { FooterSocialMedia } from './components/FooterSocialMedia';
+import logoPng from './assets/Utah-Industry-Icon-Small@2x.png';
 
 export function App() {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ export function App() {
     setUtahHeaderSettings({
       // title: 'My utah.gov Site',
       title: 'Utah Federal Funding Impact',
+      logo: { imageUrl: logoPng },
       domLocationTarget: {
         cssSelector: '#utah-header-target',
       },
@@ -92,7 +94,7 @@ export function App() {
 
       {/* <footer id="footer-target" aria-label="page" className="mt-spacing-xl" />*/}
 
-      <footer aria-label="page" className="mt-spacing-xl">
+      <footer aria-label="page">
         <FooterSocialMedia />
         <div id="footer-target" />
       </footer>

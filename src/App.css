@@ -25,7 +25,8 @@
   background-size: cover;
   display: flex;
   justify-content: flex-end;
-  min-height: 300px
+  min-height: 300px;
+  white-space: nowrap;
 }
 
 .home-banner-sidebar {

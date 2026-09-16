@@ -56,9 +56,22 @@ export function HomeLanding() {
         </div>
 
         <div className="welcome-cards">
+          <button
+            class="button button--solid button--primary-color button--large"
+            id="button-sandbox-example-id"
+            type="button"
+            onClick="() => { /* ... do something ... */ }"
+          >
+            Explore interesting things here<span class="button--icon button--icon-right">
+              <span
+                class="utds-icon-after-arrow-right icon"
+                aria-hidden="true"
+              ></span>
+            </span>
+          </button>
 
           {/* <CardLink />*/}
-          <a
+          {/* <a
             className="action-card action-card--primary-color"
             href="/healthcare"
           >
@@ -74,7 +87,7 @@ export function HomeLanding() {
             <div className="action-card__body">
                 Learn how to use our systems for decision-making
             </div>
-          </a>
+          </a>*/}
         </div>
 
 
@@ -84,9 +97,27 @@ export function HomeLanding() {
       <div className="section2">
       </div>
 
-      <main id="our-process-section" className="px-spacing" style={{ minHeight: '60vh' }}>
-        <h1 className="text-center my-spacing">How it works</h1>
-      </main>
+      <div id="our-process-section" className="methods">
+        <h1 className="my-spacing">How it works</h1>
+        <p>Here is some generic text that makes no sense but it would be nice to have something here that says something useful about what our methods are for our work and simulations</p>
+        <button
+          class="button button--primary-color button--large"
+          id="button-sandbox-example-id"
+          type="button"
+          onClick="() => { /* ... do something ... */ }"
+        >
+          Explore interesting things here<span class="button--icon button--icon-right">
+            <span
+              class="utds-icon-after-arrow-right icon"
+              aria-hidden="true"
+            ></span>
+          </span>
+        </button>
+      </div>
+
+      <div className="section2">
+      </div>
+
 
 
       {/* <div className="section3">

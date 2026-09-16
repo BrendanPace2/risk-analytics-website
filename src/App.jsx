@@ -3,28 +3,32 @@ import { setUtahHeaderSettings } from '@utahdts/utah-design-system-header';
 import '@utahdts/utah-design-system/css/index.scss';
 import './App.css'
 
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { HomeLanding } from './components/websiteContent/HomeLanding';
 import { Healthcare } from './components/websiteContent/Healthcare';
 import { Example } from './components/websiteContent/Example';
 import { Education } from './components/websiteContent/Education';
+import { Transportation } from './components/websiteContent/Transportation';
+import { About } from './components/websiteContent/About';
 import { FooterSocialMedia } from './components/FooterSocialMedia';
 import logoPng from './assets/Utah-Industry-Icon-Small@2x.png';
 
 export function App() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // there maybe be better way this was just one approach I found
+  // there maybe be better way this was just one approach I used
   const buildMenuItem = (title, path) => ({
-      title: title,
-      actionFunctionUrl: {
-        url: path,
-        actionFunction: (e) => {
-          e.preventDefault();
-          navigate(path);
-        }
+    title: title,
+    isSelected: location.pathname === path, // added this to make the active menu item colored
+    actionFunctionUrl: {
+      url: path,
+      actionFunction: (e) => {
+        e.preventDefault();
+        navigate(path);
       }
-    });
+    }
+  });
 
   useEffect(() => {
     setUtahHeaderSettings({
@@ -45,7 +49,7 @@ export function App() {
           buildMenuItem('Healthcare', '/healthcare'),
           buildMenuItem('Education', '/education'),
           buildMenuItem('Transportation', '/transportation'),
-          buildMenuItem('Example', '/example'),
+          // buildMenuItem('Example', '/example'),
           buildMenuItem('Our Team', '/about'),
           {
             actionUrl: {
@@ -77,27 +81,24 @@ export function App() {
         title: 'Menu'
       }
     });
-  }, [navigate]);
+  }, [navigate, location.pathname]);
   return (
-    <>
+    <div className={location.pathname === '/about' ? 'team-page-bg' : ''}>
       <div id="utah-header-target" />
-
-      {/* <main id="main-content" className="px-spacing" style={{ minHeight: '80vh' }}>
-      </main>*/}
 
       <Routes>
         <Route path="/" element={<HomeLanding />} />
         <Route path="/healthcare" element={<Healthcare />} />
         <Route path="/education" element={<Education />} />
+        <Route path="/transportation" element={<Transportation />} />
+        <Route path="/about" element={<About />} />
         <Route path="/example" element={<Example />} />
       </Routes>
-
-      {/* <footer id="footer-target" aria-label="page" className="mt-spacing-xl" />*/}
 
       <footer aria-label="page">
         <FooterSocialMedia />
         <div id="footer-target" />
       </footer>
-    </>
+    </div>
   )
 }

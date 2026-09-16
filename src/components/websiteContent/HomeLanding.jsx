@@ -1,12 +1,13 @@
 import { Accordion, ExternalLink } from '@utahdts/utah-design-system';
 import { Button, Tooltip } from '@utahdts/utah-design-system';
 // import { Link } from 'react-router-dom';
-import { useRef } from 'react';
+// import { useRef } from 'react';
 import { CardLink } from '../CardLink';
 import { IconsWebsite } from '../IconsWebsite';
+import utLandscape from '../../assets/ut-landscape.jpg';
 
 export function HomeLanding() {
-  const referenceElement = useRef();
+  // const referenceElement = useRef();
   return (
     <section className="landing-page-template">
       <div className="home-banner">
@@ -31,7 +32,14 @@ export function HomeLanding() {
               appearance="solid"
               color="secondary"
               id="button-sandbox-example-id"
-              onClick={() => { /* ... do something ... */ }}
+              onClick={() => {
+                // Find the element on the page
+                    const element = document.getElementById('our-process-section');
+                    if (element) {
+                      // Scroll smoothly down to it
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+              }}
             >
               Our process
             </Button>
@@ -39,29 +47,51 @@ export function HomeLanding() {
         </div>
       </div>
 
-      <main id="main-content" className="px-spacing" style={{ minHeight: '80vh' }}>
-        <h1 className="text-center my-spacing">Welcome</h1>
-        <p>What should this page look like?</p>
+      <div className='welcome'>
+        <div className="welcome-text">
+          <h1 className="my-spacing">Welcome</h1>
+          <p>We create tools for assessing impact of budget changes on people and programs</p>
+          <p>We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs.</p>
+          <p>We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs. We create tools for assessing impact of budget changes on people and programs.</p>
+        </div>
 
-        {/* <Button
-          className="button icon-button button--outlined"
-          onClick={() => { }}
-          type="button"
-        >
-          <span className="utds-icon-before-gear" aria-hidden="true" />
-          <span className="visually-hidden">Gear Icon</span>
-        </Button>*/}
+        <div className="welcome-cards">
 
-      </main>
+          {/* <CardLink />*/}
+          <a
+            className="action-card action-card--primary-color"
+            href="/healthcare"
+          >
+            <div className="action-card__title">
+                <h3>Check it out</h3>
+                <span className="button--icon button--icon-right">
+                  <span
+                    className="utds-icon-before-arrow-right"
+                    aria-hidden="true">
+                  </span>
+                </span>
+            </div>
+            <div className="action-card__body">
+                Learn how to use our systems for decision-making
+            </div>
+          </a>
+        </div>
+
+
+      </div>
 
 
       <div className="section2">
-        <CardLink />
-        <CardLink />
-        <CardLink />
       </div>
 
-      <div className="section3">
+      <main id="our-process-section" className="px-spacing" style={{ minHeight: '60vh' }}>
+        <h1 className="text-center my-spacing">How it works</h1>
+      </main>
+
+
+      {/* <div className="section3">
+        <h1>Something Interesting</h1>
+        <p>More information here</p>
         <div className="card p-spacing-xl">
           <div className="card__title">Title</div>
           <p>Sed ut perspiciatis unde omnis iste natus error.</p>
@@ -101,7 +131,7 @@ export function HomeLanding() {
           </div>
         </div>
 
-      </div>
+      </div>*/}
 
       {/* contact section */}
       <div className="contact mt-spacing-xl">
@@ -114,7 +144,6 @@ export function HomeLanding() {
           </p>
         </div>
       </div>
-
 
     </section>
   );

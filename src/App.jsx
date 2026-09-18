@@ -50,6 +50,7 @@ export function App() {
           buildMenuItem('Education', '/education'),
           buildMenuItem('Transportation', '/transportation'),
           // buildMenuItem('Example', '/example'),
+          buildMenuItem('Federal News', '/news'),
           buildMenuItem('Our Team', '/about'),
           {
             actionUrl: {

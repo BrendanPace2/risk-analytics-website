@@ -1,0 +1,38 @@
+.welcome {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 2rem;
+
+  width: 100%;
+  min-height: 500px;
+
+  box-sizing: border-box;
+  /*padding: 3rem;*/
+  padding: 3rem 3rem 3rem 10rem;
+  /*margin-left: 5rem;*/
+
+
+  background-image:
+      linear-gradient(rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.96)),
+      url('../../assets/usulogo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+.welcome-text {
+  max-width: 60%;
+  /*margin-left: 5rem;*/
+  /*align-self: flex-start;
+  margin-left: 8rem;
+  margin-bottom: 7rem;
+  margin-top: 1rem;*/
+}
+
+/*not being used rn*/
+.welcome-cards {
+  display: flex;
+  gap: 2rem;
+}

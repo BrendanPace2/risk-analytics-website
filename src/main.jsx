@@ -1,27 +1,16 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from './App';
 import { BrowserRouter } from 'react-router-dom';
+import { App } from './App';
 
+// styles
+import '@utahdts/utah-design-system/css/index.scss';
+import './styles/main.scss';
 
-const root = createRoot(document.getElementById('root'))
-
-root.render(
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>,
 )
-
-// root.render(
-//   <>
-//     <h1>Hello from react</h1>
-
-//     <ul>
-//       <li>Item 1</li>
-//       <li>Item 2</li>
-//       <li>Item 3</li>
-//     </ul>
-//   </>
-// )

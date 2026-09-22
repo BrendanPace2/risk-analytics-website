@@ -1,17 +1,22 @@
+// react tools
 import { useEffect } from 'react';
-import { setUtahHeaderSettings } from '@utahdts/utah-design-system-header';
-import '@utahdts/utah-design-system/css/index.scss';
-import './App.css'
-
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { HomeLanding } from './components/websiteContent/HomeLanding';
-import { Healthcare } from './components/websiteContent/Healthcare';
-import { Example } from './components/websiteContent/Example';
-import { Education } from './components/websiteContent/Education';
-import { Transportation } from './components/websiteContent/Transportation';
-import { About } from './components/websiteContent/About';
+
+// third party
+import { setUtahHeaderSettings } from '@utahdts/utah-design-system-header';
+
+// components
 import { FooterSocialMedia } from './components/FooterSocialMedia';
+import { About } from './components/websiteContent/About';
+import { Education } from './components/websiteContent/Education';
+import { Example } from './components/websiteContent/Example';
+import { Healthcare } from './components/websiteContent/Healthcare';
+import { HomeLanding } from './components/websiteContent/HomeLanding';
+import { Transportation } from './components/websiteContent/Transportation';
+
+// assets
 import logoPng from './assets/Utah-Industry-Icon-Small@2x.png';
+
 
 export function App() {
   const navigate = useNavigate();
@@ -86,7 +91,6 @@ export function App() {
   return (
     <div className={location.pathname === '/about' ? 'team-page-bg' : ''}>
       <div id="utah-header-target" />
-
       <Routes>
         <Route path="/" element={<HomeLanding />} />
         <Route path="/healthcare" element={<Healthcare />} />
@@ -95,7 +99,6 @@ export function App() {
         <Route path="/about" element={<About />} />
         <Route path="/example" element={<Example />} />
       </Routes>
-
       <footer aria-label="page">
         <FooterSocialMedia />
         <div id="footer-target" />

@@ -20,7 +20,7 @@ export function FooterSocialMedia() {
         rel="noreferrer"
       >
         <IconsWebsite.IconGitHub />
-        <span className="visually-hidden">Utah Design System Git Hub, opens in a new tab</span>
+        <span className="visually-hidden">Josh Liddell's Git Hub, opens in a new tab</span>
       </a>
     </FooterSocialMediaBar>
   );

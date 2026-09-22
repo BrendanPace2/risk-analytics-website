@@ -1,0 +1,26 @@
+// @use 'abstracts/variables';
+
+// Components
+@use 'components';
+
+// override colors
+.utah-design-system {
+  /*--primary-color: #056977;
+  --primary-color-dark: #044b55;
+  --primary-color-light: #0CA4A5;*/
+
+  --primary-color: #0258BB;
+  --primary-color-dark: #0E1C3B;
+  --primary-color-light: #C1CFE7;
+
+  /*--secondary-color: #774f3a;*/
+  --secondary-color: #377E72;
+  --secondary-color-dark: #4c3326;
+  --secondary-color-light: #97654a;
+
+  --accent-color: #ffb100;
+  --accent-color-dark: #745a1e;
+  --accent-color-light: #fff9ec;
+
+  --header-primary-color: #0E1C3B;
+}

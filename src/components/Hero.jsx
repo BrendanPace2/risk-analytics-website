@@ -3,7 +3,6 @@ import { Button } from '@utahdts/utah-design-system';
 export function Hero({ children }) {
   return (
     <div className="hero">
-      {/* <div className="home-banner-title">USU<br />Analytics<br />Team</div>*/}
       <div className="home-banner-sidebar">
         {children}
         <div className="hero-buttons">
@@ -11,7 +10,7 @@ export function Hero({ children }) {
             appearance="outlined"
             color="none"
             id="button-sandbox-example-id"
-            onClick={() => window.open('https://en.wikipedia.org/wiki/Monte_Carlo_method', '_blank')}
+            onClick={() => window.open('https://le.utah.gov/~2026/bills/static/HB0249.html', '_blank')}
           >
             Learn More
             <span className="utds-new-tab-link-a11y">

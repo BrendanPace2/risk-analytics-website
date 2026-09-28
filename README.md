@@ -1,6 +1,14 @@
 # Federal funding impact on the state of Utah
 Developed by the USU computational finance team
 
+```bash
+git clone https://github.com/Josh-Liddell/risk-analytics-website.git
+cd risk-analytics-website
+npm i
+npm run dev
+```
+
+
 
 <!--# Example of Importing the Design System in to a Vite-React Project
 The Utah Design System library provides CSS and components to make development easier. This example shows how to import them into a  Vite-React project.

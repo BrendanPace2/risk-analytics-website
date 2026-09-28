@@ -8,6 +8,7 @@ import { setUtahHeaderSettings } from '@utahdts/utah-design-system-header';
 // components
 import { FooterSocialMedia } from './components/FooterSocialMedia';
 import { About } from './components/websiteContent/About';
+import { News } from './components/websiteContent/News';
 import { Education } from './components/websiteContent/Education';
 import { Example } from './components/websiteContent/Example';
 import { Healthcare } from './components/websiteContent/Healthcare';
@@ -97,6 +98,7 @@ export function App() {
         <Route path="/education" element={<Education />} />
         <Route path="/transportation" element={<Transportation />} />
         <Route path="/about" element={<About />} />
+        <Route path="/news" element={<News />} />
         <Route path="/example" element={<Example />} />
       </Routes>
       <footer aria-label="page">

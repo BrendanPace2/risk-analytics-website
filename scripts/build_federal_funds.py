@@ -45,6 +45,22 @@ AREA_OVERRIDES = {
     },
 }
 
+# FY2025 ACFR, government-wide Statement of Activities, expenses in dollars. SEFA covers the
+# primary government plus the colleges and universities, so only those component units count.
+# State funding for colleges and universities is subtracted because it is an expense of the
+# primary government and is spent again by the institutions.
+ACFR = {
+    "fiscalYear": "FY2025",
+    "url": "https://finance.utah.gov/wp-content/uploads/FY25-ACFR-FINAL-reduced-size.pdf",
+    "primaryGovernment": 23_221_154_000,
+    "collegesAndUniversities": {
+        "University of Utah": 8_680_121_000,
+        "Utah State University": 1_235_815_000,
+        "Nonmajor Colleges and Universities": 1_881_518_000,
+    },
+    "stateFundingForCollegesAndUniversities": 1_726_819_000,
+}
+
 # Values approved in the 2026-09-29 data source decision. A mismatch means the workbook changed.
 EXPECTED = {
     "sefa_line_items": 2008,
@@ -363,6 +379,13 @@ def main():
     cobi_own_source = cobi_all_funds - cobi_federal
     check("COBI own-source", cobi_own_source, EXPECTED["cobi_own_source"])
 
+    acfr_total_spending = (
+        ACFR["primaryGovernment"]
+        + sum(ACFR["collegesAndUniversities"].values())
+        - ACFR["stateFundingForCollegesAndUniversities"]
+    )
+    acfr_own_source = acfr_total_spending - sefa_total
+
     stress_tests, top10_total, hhi = build_stress_tests(programs, sefa_total)
     check("Top 10 total", top10_total, EXPECTED["top10_total"])
     check("Top 10 HHI", round(hhi, 2), EXPECTED["top10_hhi"], tolerance=0.01)
@@ -383,11 +406,17 @@ def main():
         "meta": {
             "sefaFiscalYear": fiscal_year,
             "cobiBudgetPeriod": "FY2026–27",
+            "acfrFiscalYear": ACFR["fiscalYear"],
             "sources": {
                 "sefa": "Schedule of Expenditures of Federal Awards (audited actual federal spending)",
                 "cobi": "Legislature's appropriations budget (all fund sources)",
+                "acfr": "Annual Comprehensive Financial Report (audited actual spending, all sources)",
+                "acfrUrl": ACFR["url"],
             },
             "caveats": [
+                f"Federal dependency compares SEFA federal spending with total {ACFR['fiscalYear']} spending "
+                "in the State's audited ACFR, counting state agencies plus colleges and universities to "
+                "match the SEFA's scope.",
                 "SEFA and COBI cover different periods and concepts (actual spending vs. appropriated "
                 "budget authority); their federal totals differ by about 6–15% and that gap is expected.",
                 "Only one year of data is available, so no year-over-year trends are shown.",
@@ -405,8 +434,11 @@ def main():
             "cobiAllFunds": cobi_all_funds,
             "cobiFederalFunds": cobi_federal,
             "cobiOwnSource": cobi_own_source,
-            "ownSourceDependency": round(sefa_total / cobi_own_source, 6),
-            "ownSourceDependencyExCovid": round(sefa_ex_covid / cobi_own_source, 6),
+            "acfrTotalSpending": acfr_total_spending,
+            "acfrOwnSource": acfr_own_source,
+            "ownSourceDependency": round(sefa_total / acfr_own_source, 6),
+            "ownSourceDependencyExCovid": round(sefa_ex_covid / acfr_own_source, 6),
+            "federalShareOfSpending": round(sefa_total / acfr_total_spending, 6),
             "allFundsFederalShare": round(cobi_federal / cobi_all_funds, 6),
             "top10Total": top10_total,
             "top10Share": round(top10_total / sefa_total, 6),

@@ -2,11 +2,15 @@
   "meta": {
     "sefaFiscalYear": "SFY 2025",
     "cobiBudgetPeriod": "FY2026–27",
+    "acfrFiscalYear": "FY2025",
     "sources": {
       "sefa": "Schedule of Expenditures of Federal Awards (audited actual federal spending)",
-      "cobi": "Legislature's appropriations budget (all fund sources)"
+      "cobi": "Legislature's appropriations budget (all fund sources)",
+      "acfr": "Annual Comprehensive Financial Report (audited actual spending, all sources)",
+      "acfrUrl": "https://finance.utah.gov/wp-content/uploads/FY25-ACFR-FINAL-reduced-size.pdf"
     },
     "caveats": [
+      "Federal dependency compares SEFA federal spending with total FY2025 spending in the State's audited ACFR, counting state agencies plus colleges and universities to match the SEFA's scope.",
       "SEFA and COBI cover different periods and concepts (actual spending vs. appropriated budget authority); their federal totals differ by about 6–15% and that gap is expected.",
       "Only one year of data is available, so no year-over-year trends are shown.",
       "Stress tests are flat percentage cuts, not a probability model or forecast.",
@@ -29,8 +33,11 @@
     "cobiAllFunds": 32486384400,
     "cobiFederalFunds": 9115438500,
     "cobiOwnSource": 23370945900,
-    "ownSourceDependency": 0.448441,
-    "ownSourceDependencyExCovid": 0.41451,
+    "acfrTotalSpending": 33291789000,
+    "acfrOwnSource": 22811290371,
+    "ownSourceDependency": 0.459443,
+    "ownSourceDependencyExCovid": 0.42468,
+    "federalShareOfSpending": 0.314807,
     "allFundsFederalShare": 0.280593,
     "top10Total": 6225717250,
     "top10Share": 0.594029,

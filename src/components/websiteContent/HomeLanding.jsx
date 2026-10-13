@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Tag } from '@utahdts/utah-design-system';
+import { Tag, Tooltip } from '@utahdts/utah-design-system';
 import {
   agencies,
   areas,
@@ -12,9 +12,7 @@ import {
 } from '../../config/federalFunds';
 
 import { Hero } from '../Hero';
-import { EChart } from '../EChart';
-import * as charts from '../../config/charts';
-
+import { FederalTimeline } from '../FederalTimeline';
 
 const EXPOSED_AGENCIES_SHOWN = 10;
 
@@ -29,6 +27,40 @@ function ShareBar({ value, max }) {
     <span className="dashboard__bar-track">
       <span className="dashboard__bar-fill" style={{ width: `${(value / max) * 100}%` }} />
     </span>
+  );
+}
+
+function StatCard({ id, label, value, note, math, primary = false }) {
+  const [card, setCard] = useState(null);
+  return (
+    <>
+      <div
+        ref={setCard}
+        className={`card dashboard__stat${primary ? ' dashboard__stat--primary' : ''}`}
+        tabIndex={0}
+        aria-describedby={`${id}-math`}
+      >
+        <div className="dashboard__stat-label utds-icon-after-info">{label}</div>
+        <div className="dashboard__stat-value">{value}</div>
+        <div className="dashboard__stat-note">{note}</div>
+      </div>
+      <Tooltip referenceElement={card} placement="bottom" className="dashboard__tooltip">
+        <div id={`${id}-math`} className="dashboard__math">
+          <div className="dashboard__math-title">How this is calculated</div>
+          {math.lines.map((line, index) => (
+            <div key={line.label}>
+              {index > 0 && <div className="dashboard__math-op">{math.operator}</div>}
+              <div className="dashboard__math-row">
+                <span>{line.label}</span>
+                <strong>{line.amount}</strong>
+              </div>
+            </div>
+          ))}
+          <div className="dashboard__math-result">= {value}</div>
+          {math.footnote && <p className="dashboard__math-note">{math.footnote}</p>}
+        </div>
+      </Tooltip>
+    </>
   );
 }
 
@@ -47,8 +79,8 @@ export function HomeLanding() {
         <div className="banner__wrapper banner--inline banner--accent-light">
           <div className="banner__message">
             <strong>Preliminary figures.</strong>
-            Built from Utah&apos;s {meta.sefaFiscalYear} federal awards schedule and the Legislature&apos;s
-            {' '}{meta.cobiBudgetPeriod} budget. Not yet reviewed for publication.
+            Built from Utah&apos;s {meta.sefaFiscalYear} federal awards schedule and financial report, and the
+            {' '}Legislature&apos;s {meta.cobiBudgetPeriod} budget. Not yet reviewed for publication.
           </div>
         </div>
       </div>
@@ -64,37 +96,87 @@ export function HomeLanding() {
         </div>
 
         <div className="dashboard__stats">
-          <div className="card dashboard__stat dashboard__stat--primary">
-            <div className="dashboard__stat-label">Federal dependency</div>
-            <div className="dashboard__stat-value">{formatPercent(headline.ownSourceDependency)}</div>
-            <div className="dashboard__stat-note">
-              Federal spending as a share of the state&apos;s own-source budget.
-              {' '}{formatPercent(headline.ownSourceDependencyExCovid)} excluding COVID-era funds.
-            </div>
-          </div>
-          <div className="card dashboard__stat">
-            <div className="dashboard__stat-label">Share of total appropriated budget</div>
-            <div className="dashboard__stat-value">{formatPercent(headline.allFundsFederalShare)}</div>
-            <div className="dashboard__stat-note">
-              {formatMoney(headline.cobiFederalFunds)} federal of {formatMoney(headline.cobiAllFunds)},
-              {' '}{meta.cobiBudgetPeriod}
-            </div>
-          </div>
-          <div className="card dashboard__stat">
-            <div className="dashboard__stat-label">Top 10 federal programs</div>
-            <div className="dashboard__stat-value">{formatPercent(headline.top10Share)}</div>
-            <div className="dashboard__stat-note">
-              of all federal dollars. Concentration index {Math.round(headline.top10Hhi).toLocaleString()}
-              {' '}(above 2,500 is highly concentrated).
-            </div>
-          </div>
-          <div className="card dashboard__stat">
-            <div className="dashboard__stat-label">Federal spending</div>
-            <div className="dashboard__stat-value">{formatMoney(headline.sefaFederalTotal)}</div>
-            <div className="dashboard__stat-note">
-              Audited, {meta.sefaFiscalYear}. Includes {formatMoney(headline.sefaCovidEra)} in COVID-era funds.
-            </div>
-          </div>
+          <StatCard
+            id="stat-dependency"
+            primary
+            label="Federal dependency"
+            value={formatPercent(headline.ownSourceDependency)}
+            note={`Federal dollars spent for every dollar of Utah's own money, ${meta.sefaFiscalYear}. ${formatPercent(headline.ownSourceDependencyExCovid)} excluding COVID-era funds.`}
+            math={{
+              operator: '÷',
+              lines: [
+                {
+                  label: `Federal money state agencies, colleges, and universities spent in ${meta.sefaFiscalYear}`,
+                  amount: formatMoney(headline.sefaFederalTotal),
+                },
+                {
+                  label: `Everything else they spent that year: ${formatMoney(headline.acfrTotalSpending)} in total spending minus the federal part`,
+                  amount: formatMoney(headline.acfrOwnSource),
+                },
+              ],
+              footnote: `Both figures are audited ${meta.acfrFiscalYear} spending. Federal money was ${formatPercent(headline.federalShareOfSpending)} of all spending. Leaving out ${formatMoney(headline.sefaCovidEra)} in COVID-era relief gives ${formatPercent(headline.ownSourceDependencyExCovid)}.`,
+            }}
+          />
+          <StatCard
+            id="stat-budget-share"
+            label="Share of total appropriated budget"
+            value={formatPercent(headline.allFundsFederalShare)}
+            note={`${formatMoney(headline.cobiFederalFunds)} federal of ${formatMoney(headline.cobiAllFunds)}, ${meta.cobiBudgetPeriod}`}
+            math={{
+              operator: '÷',
+              lines: [
+                {
+                  label: `Federal funds in the ${meta.cobiBudgetPeriod} state budget`,
+                  amount: formatMoney(headline.cobiFederalFunds),
+                },
+                {
+                  label: `The entire ${meta.cobiBudgetPeriod} state budget, from all sources`,
+                  amount: formatMoney(headline.cobiAllFunds),
+                },
+              ],
+              footnote: 'Both figures come from the Legislature\'s budget, so this compares like with like.',
+            }}
+          />
+          <StatCard
+            id="stat-top-ten"
+            label="Top 10 federal programs"
+            value={formatPercent(headline.top10Share)}
+            note={`of all federal dollars. Concentration index ${Math.round(headline.top10Hhi).toLocaleString()} (above 2,500 is highly concentrated).`}
+            math={{
+              operator: '÷',
+              lines: [
+                {
+                  label: 'Federal money spent through the 10 largest programs',
+                  amount: formatMoney(headline.top10Total),
+                },
+                {
+                  label: `All federal money spent in ${meta.sefaFiscalYear}`,
+                  amount: formatMoney(headline.sefaFederalTotal),
+                },
+              ],
+              footnote: `The concentration index squares each top program's share of the top-10 total and adds them up. Higher means a few programs, led by ${stressTests[0].group}, hold most of the money.`,
+            }}
+          />
+          <StatCard
+            id="stat-federal-spending"
+            label="Federal spending"
+            value={formatMoney(headline.sefaFederalTotal)}
+            note={`Audited, ${meta.sefaFiscalYear}. Includes ${formatMoney(headline.sefaCovidEra)} in COVID-era funds.`}
+            math={{
+              operator: '+',
+              lines: [
+                {
+                  label: 'Spent directly by state agencies',
+                  amount: formatMoney(headline.sefaFederalTotal - headline.toSubrecipients),
+                },
+                {
+                  label: 'Passed on to local governments, schools, and other organizations',
+                  amount: formatMoney(headline.toSubrecipients),
+                },
+              ],
+              footnote: `Adds up every federal award in the state's ${meta.sefaFiscalYear} federal spending audit.`,
+            }}
+          />
         </div>
 
         <div className="dashboard__split">
@@ -239,16 +321,14 @@ export function HomeLanding() {
           </div>
         </div>
 
+        <FederalTimeline />
+
         <div className="dashboard__caveats">
           <h2>About these numbers</h2>
           <ul>
             {meta.caveats.map((caveat) => <li key={caveat}>{caveat}</li>)}
           </ul>
         </div>
-      </div>
-
-      <div className="homechart">
-        <EChart option={charts.line2} />
       </div>
 
       <div className="dashboard__credits">

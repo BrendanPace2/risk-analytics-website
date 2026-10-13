@@ -45,18 +45,36 @@ AREA_OVERRIDES = {
     },
 }
 
-# Values approved in the 2026-09-29 data source decision. A mismatch means the workbook changed.
+# FY2025 ACFR, government-wide Statement of Activities, expenses in dollars. SEFA covers the
+# primary government plus the colleges and universities, so only those component units count.
+# State funding for colleges and universities is subtracted because it is an expense of the
+# primary government and is spent again by the institutions.
+ACFR = {
+    "fiscalYear": "FY2025",
+    "url": "https://finance.utah.gov/wp-content/uploads/FY25-ACFR-FINAL-reduced-size.pdf",
+    "primaryGovernment": 23_221_154_000,
+    "collegesAndUniversities": {
+        "University of Utah": 8_680_121_000,
+        "Utah State University": 1_235_815_000,
+        "Nonmajor Colleges and Universities": 1_881_518_000,
+    },
+    "stateFundingForCollegesAndUniversities": 1_726_819_000,
+}
+
+# Values approved in the 2026-09-29 data source decision, restated on 2026-10-12 to count
+# Directly Expended only ("Provided to Subrecipients" is a subset of it). A mismatch means the
+# workbook changed.
 EXPECTED = {
     "sefa_line_items": 2008,
-    "sefa_total": 10_480_498_629,
-    "sefa_ex_covid": 9_687_495_358,
+    "sefa_total": 9_287_887_774,
+    "sefa_ex_covid": 8_716_417_461,
     "sefa_negative_lines": 89,
-    "sefa_negative_net": -19_844_137,
+    "sefa_negative_net": -19_803_444,
     "cobi_all_funds": 32_486_384_400,
     "cobi_federal": 9_115_438_500,
     "cobi_own_source": 23_370_945_900,
-    "top10_total": 6_225_717_250,
-    "top10_hhi": 3692.92,
+    "top10_total": 5_758_421_034,
+    "top10_hhi": 4197.56,
     "agencies": 19,
 }
 
@@ -225,7 +243,7 @@ def build_programs(sefa, keywords, top10):
             "cluster": cluster,
             "directlyExpended": p["direct"],
             "toSubrecipients": p["sub"],
-            "total": p["direct"] + p["sub"],
+            "total": p["direct"],
             "covidEra": any(k in searchable for k in lowered),
             "top10Group": by_cluster.get(cluster) or by_aln.get(aln),
         })
@@ -296,7 +314,7 @@ def build_agencies(crosswalk, sefa, cobi):
     sefa_by_agency = defaultdict(int)
     division_by_agency = {}
     for line in sefa:
-        sefa_by_agency[line["stateAgency"]] += line["direct"] + line["sub"]
+        sefa_by_agency[line["stateAgency"]] += line["direct"]
         division_by_agency[line["stateAgency"]] = line["division"]
 
     cobi_total, cobi_fed = defaultdict(int), defaultdict(int)
@@ -346,10 +364,10 @@ def main():
     crosswalk = load_crosswalk(wb)
 
     check("SEFA award lines", len(sefa), EXPECTED["sefa_line_items"])
-    sefa_total = sum(line["direct"] + line["sub"] for line in sefa)
+    sefa_total = sum(line["direct"] for line in sefa)
     check("SEFA federal total", sefa_total, EXPECTED["sefa_total"])
 
-    negatives = [line["direct"] + line["sub"] for line in sefa if line["direct"] + line["sub"] < 0]
+    negatives = [line["direct"] for line in sefa if line["direct"] < 0]
     check("SEFA negative lines", len(negatives), EXPECTED["sefa_negative_lines"])
     check("SEFA negative net", sum(negatives), EXPECTED["sefa_negative_net"])
 
@@ -363,6 +381,13 @@ def main():
     cobi_own_source = cobi_all_funds - cobi_federal
     check("COBI own-source", cobi_own_source, EXPECTED["cobi_own_source"])
 
+    acfr_total_spending = (
+        ACFR["primaryGovernment"]
+        + sum(ACFR["collegesAndUniversities"].values())
+        - ACFR["stateFundingForCollegesAndUniversities"]
+    )
+    acfr_own_source = acfr_total_spending - sefa_total
+
     stress_tests, top10_total, hhi = build_stress_tests(programs, sefa_total)
     check("Top 10 total", top10_total, EXPECTED["top10_total"])
     check("Top 10 HHI", round(hhi, 2), EXPECTED["top10_hhi"], tolerance=0.01)
@@ -373,24 +398,32 @@ def main():
         fail(f"most exposed agency is {agencies[0]['name']!r}, expected Veterans and Military Affairs")
     check("Veterans and Military Affairs federal %", round(agencies[0]["cobiFederalPct"], 4), 0.8658)
 
-    pass_through = sum(line["direct"] + line["sub"] for line in sefa if line["passThrough"])
+    pass_through = sum(line["direct"] for line in sefa if line["passThrough"])
     subrecipients = sum(line["sub"] for line in sefa)
     by_division = defaultdict(int)
     for line in sefa:
-        by_division[line["division"]] += line["direct"] + line["sub"]
+        by_division[line["division"]] += line["direct"]
 
     dataset = {
         "meta": {
             "sefaFiscalYear": fiscal_year,
             "cobiBudgetPeriod": "FY2026–27",
+            "acfrFiscalYear": ACFR["fiscalYear"],
             "sources": {
                 "sefa": "Schedule of Expenditures of Federal Awards (audited actual federal spending)",
                 "cobi": "Legislature's appropriations budget (all fund sources)",
+                "acfr": "Annual Comprehensive Financial Report (audited actual spending, all sources)",
+                "acfrUrl": ACFR["url"],
             },
             "caveats": [
+                f"Federal dependency compares SEFA federal spending with total {ACFR['fiscalYear']} spending "
+                "in the State's audited ACFR, counting state agencies plus colleges and universities to "
+                "match the SEFA's scope.",
+                "SEFA figures count Directly Expended only; amounts provided to subrecipients are "
+                "already included in it.",
                 "SEFA and COBI cover different periods and concepts (actual spending vs. appropriated "
-                "budget authority); their federal totals differ by about 6–15% and that gap is expected.",
-                "Only one year of data is available, so no year-over-year trends are shown.",
+                "budget authority), so their federal totals are expected to differ.",
+                "In the timeline, the COVID relief series is approximate: it is matched by program name.",
                 "Stress tests are flat percentage cuts, not a probability model or forecast.",
                 "Universities show little federal money in COBI because research and student aid are "
                 "largely outside the appropriations process.",
@@ -405,8 +438,11 @@ def main():
             "cobiAllFunds": cobi_all_funds,
             "cobiFederalFunds": cobi_federal,
             "cobiOwnSource": cobi_own_source,
-            "ownSourceDependency": round(sefa_total / cobi_own_source, 6),
-            "ownSourceDependencyExCovid": round(sefa_ex_covid / cobi_own_source, 6),
+            "acfrTotalSpending": acfr_total_spending,
+            "acfrOwnSource": acfr_own_source,
+            "ownSourceDependency": round(sefa_total / acfr_own_source, 6),
+            "ownSourceDependencyExCovid": round(sefa_ex_covid / acfr_own_source, 6),
+            "federalShareOfSpending": round(sefa_total / acfr_total_spending, 6),
             "allFundsFederalShare": round(cobi_federal / cobi_all_funds, 6),
             "top10Total": top10_total,
             "top10Share": round(top10_total / sefa_total, 6),

@@ -169,7 +169,7 @@ export function FederalTimeline() {
       </div>
       <p className="dashboard__footnote">{timelineMeta.footnote}</p>
 
-      <table className="visually-hidden">
+      {/* <table className="visually-hidden">
         <caption>{timelineMeta.title}, in billions of dollars</caption>
         <thead>
           <tr>
@@ -190,7 +190,7 @@ export function FederalTimeline() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table>*/}
     </section>
   );
 }
